@@ -36,7 +36,7 @@ module NetGSM
 		 	</body>	 
 		 	</mainbody>"
 
-		 	puts result
+		 	#puts result
 		 	return result
 		end
 	end

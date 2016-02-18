@@ -10,7 +10,7 @@ module NetGSM
 			response = send_request(body)
 
 			result = parse_response(response)
-			"result = #{result}"
+			return {code: result[0], sms_id: result[1]}
 		end
 
 		# message_array format [[phone_number, 'sms message body']]
@@ -24,7 +24,7 @@ module NetGSM
 			response = send_request(body)
 
 			result = parse_response(response)
-			"result = #{result}"
+			return {code: result[0], sms_id: result[1]}
 		end
 
 		def sms_status
