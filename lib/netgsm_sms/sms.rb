@@ -27,6 +27,19 @@ module NetGSM
 			return {code: result[0], sms_id: result[1]}
 		end
 
+		def self.send_otp(recipient, message_text, opts={})
+			valid_options = opts.only(:from, :start_date, :stop_date, :turkish)
+			valid_options.merge!(:start_date => NetGSM::DATE.now) unless valid_options[:start_date]
+			valid_options.merge!(:stop_date => NetGSM::DATE.n_hour_from_now(1)) unless valid_options[:stop_date]
+
+			body = NetGSM::XmlBody.send_otp_body(recipient, message_text, valid_options)
+
+			response = send_otp_request(body)
+
+			result = parse_response(response)
+			return {code: result[0], sms_id: result[1]}
+		end
+
 		def sms_status
 			'OK status'
 		end
@@ -56,6 +69,20 @@ module NetGSM
 		    # parser.parse(response.body)
 
 		    return response.body
+		end
+
+		def self.send_otp_request(body)
+			header = {
+				"Content-Type" => "text/xml; charset=utf-8",
+				"Content-Length" => body.bytesize.to_s,
+				"Accept" => "*/*"
+			}
+
+			request = Net::HTTP::Post.new('/sms/send/otp', header)
+			request.body = body
+			response = Net::HTTP.new(NetGSM.configuration.host, NetGSM.configuration.port).start {|http| http.request(request) }
+
+			return response.body
 		end
 
 		def self.parse_response(body)

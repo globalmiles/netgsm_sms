@@ -39,5 +39,22 @@ module NetGSM
 		 	#puts result
 		 	return result
 		end
+
+		def self.send_otp_body(recipient, message_text, valid_options)
+			<<-END_OF_CONTENT
+				<?xml version="1.0"?>
+				<mainbody>
+					<header>
+						<usercode>#{NetGSM.configuration.usercode}</usercode>
+						<password>#{NetGSM.configuration.password}</password>
+						<msgheader>#{valid_options[:from]}</msgheader>
+					</header>
+					<body>
+						<msg><![CDATA[#{message_text}]]></msg>
+						<no>#{recipient}</no>
+					</body>
+				</mainbody>
+			END_OF_CONTENT
+		end
 	end
 end
