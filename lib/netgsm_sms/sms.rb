@@ -77,7 +77,7 @@ module NetGSM
 				"Accept" => "*/*"
 			}
 
-			response = Net::HTTP.start("https://#{NetGSM.configuration.host}", 433, use_ssl: true) do |http|
+			response = Net::HTTP.start("https://#{NetGSM.configuration.host}", 443, use_ssl: true) do |http|
 				request = Net::HTTP::Post.new('/sms/send/otp', header)
 				request.body = body
 			end
