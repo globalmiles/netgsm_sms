@@ -77,7 +77,7 @@ module NetGSM
 			response = client.post do |req|
 				req.url '/sms/send/otp'
 				req.body = body
-				req.headers['Content-Type'] = 'application/json'
+				req.headers['Content-Type'] = 'text/xml; charset=utf-8'
 			end
 
 			response.body
