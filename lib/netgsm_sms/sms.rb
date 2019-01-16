@@ -79,7 +79,7 @@ module NetGSM
 
 			request = Net::HTTP::Post.new('/sms/send/otp', header)
 			request.body = body
-			response = Net::HTTP.new(NetGSM.configuration.host, 443).start {|http| http.request(request) }
+			response = Net::HTTP.new("https://#{NetGSM.configuration.host}", 443).start {|http| http.request(request) }
 
 			return response.body
 		end
