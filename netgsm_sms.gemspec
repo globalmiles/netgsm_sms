@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'netgsm_sms'
-  s.version     = '0.1.0.34'
+  s.version     = '0.1.0.35'
   s.date        = '2014-04-24'
   s.summary     = "SMS sender for Turkey NetGSM!"
   s.description = "This gem is for sending SMS using NetGSM services"
@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
   s.homepage    =
     'http://rubygems.org/gems/netgsm_sms'
   s.license       = 'MIT'
+  s.add_dependency 'faraday'
 end

@@ -1,3 +1,5 @@
+require 'faraday'
+
 module NetGSM
 	class SMS
 		def self.send_sms(recipient, message_text, opts={})
@@ -71,18 +73,14 @@ module NetGSM
 		end
 
 		def self.send_otp_request(body)
-			header = {
-				"Content-Type" => "text/xml; charset=utf-8",
-				"Content-Length" => body.bytesize.to_s,
-				"Accept" => "*/*"
-			}
-
-			response = Net::HTTP.start("https://#{NetGSM.configuration.host}", 443, use_ssl: true) do |http|
-				request = Net::HTTP::Post.new('/sms/send/otp', header)
-				request.body = body
+			client = Faraday.new(url: "https://#{NetGSM.configuration.host}")
+			response = client.post do |req|
+				req.url '/sms/send/otp'
+				req.body = body
+				req.headers['Content-Type'] = 'application/json'
 			end
 
-			return response.body
+			response.body
 		end
 
 		def self.parse_response(body)
