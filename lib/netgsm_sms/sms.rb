@@ -36,8 +36,7 @@ module NetGSM
 
 			response = send_otp_request(body)
 
-			result = parse_response(response)
-			return {code: result[0], sms_id: result[1]}
+			return response
 		end
 
 		def sms_status
