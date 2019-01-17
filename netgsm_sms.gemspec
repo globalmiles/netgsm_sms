@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'netgsm_sms'
-  s.version     = '0.1.0.37'
+  s.version     = '0.1.0.38'
   s.date        = '2014-04-24'
   s.summary     = "SMS sender for Turkey NetGSM!"
   s.description = "This gem is for sending SMS using NetGSM services"
