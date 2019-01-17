@@ -30,9 +30,7 @@ module NetGSM
 		end
 
 		def self.send_otp(recipient, message_text, opts={})
-			valid_options = opts.only(:from, :start_date, :stop_date, :turkish)
-			valid_options.merge!(:start_date => NetGSM::DATE.now) unless valid_options[:start_date]
-			valid_options.merge!(:stop_date => NetGSM::DATE.n_hour_from_now(1)) unless valid_options[:stop_date]
+			valid_options = opts.only(:from)
 
 			body = NetGSM::XmlBody.send_otp_body(recipient, message_text, valid_options)
 
@@ -77,7 +75,7 @@ module NetGSM
 			response = client.post do |req|
 				req.url '/sms/send/otp'
 				req.body = body
-				req.headers['Content-Type'] = 'text/xml; charset=utf-8'
+				req.headers['Content-Type'] = 'text/xml'
 			end
 
 			response.body
